@@ -1,0 +1,172 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+}
+
+table {
+    width: 100%;
+    height: 70vh;
+    color: white;
+    background-color: rgb(25, 25, 25);
+}
+
+td {
+    width: 25%;
+    text-align: center;
+    background-color: #141414;
+    font-size: 35px;
+}
+
+td:hover {
+    background-color: rgb(30, 30, 30);
+    cursor: pointer;
+}
+body.dark table {
+    width: 100%;
+    height: 70vh;
+    color: #000000;
+    background-color: rgb(255, 255, 255);
+}
+body.dark td {
+    width: 25%;
+    text-align: center;
+    background-color: #ffffff;
+    font-size: 35px;
+}
+
+body.dark td:hover {
+    background-color: rgb(197, 197, 197);
+    cursor: pointer;
+}
+#resultArea {
+    height: 20vh;
+    background-color: rgb(40, 40, 40);
+    color: white;
+    font-size: 64px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+#result {
+    background-color: #00ff17;
+}
+
+#result:hover {
+    background-color: rgb(36, 255, 88);
+}
+
+.highlight {
+    background-color: rgba(25, 25, 25);
+}
+#lilresultArea {
+    height: 10vh;
+    background-color: rgb(40, 40, 40);
+    color: white;
+    font-size: 32px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 24px;
+    box-sizing: border-box;
+}
+ul {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+body.dark ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #e1e1e1;
+}
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+    background-color: #111;
+}
+body.dark li a:hover {
+    background-color: #a2a2a2;
+}
+.CLR{
+    background-color: crimson;
+}
+.CLR:hover{
+    background-color: #ff002f;
+}
+.DEL{
+    background-color: #ff4500;
+}
+.DEL:hover{
+    background-color: #ff7442;
+}
+body.dark .CLR{
+    background-color: crimson;
+}
+body.dark .CLR:hover{
+    background-color: #ff002f;
+}
+body.dark .DEL{
+    background-color: #ff4500;
+}
+body.dark .DEL:hover{
+    background-color: #ff7442;
+}
+body.dark .highlight{
+    color: #141414;
+    background: #ffffff;
+}
+body.dark .highlight:hover{
+    background: #c5c5c5;
+}
+body.dark li a {
+    display: block;
+    color: #0c0c0c;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+body.dark #resultArea {
+    background-color: rgb(220, 220, 220);
+    color: #000000;
+}
+body.dark #lilresultArea{
+    background-color: rgb(220, 220, 220);
+     color: #000000;
+
+ }
+body.dark  .highlight {
+    background-color: rgb(209, 209, 209);
+}
+.extra {
+    display: none;
+}
+
+body.pro .extra {
+    display: revert;
+}
+body.pro .norm {
+    display: none;
+}
