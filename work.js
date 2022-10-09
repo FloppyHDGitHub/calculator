@@ -64,7 +64,7 @@ function convertString(string) { // ergebnis vereinfacht rechnung
     } // string_array ist leer nach dem ganzen hier
 
     // vordefinierung der Sonderzeichen
-    specials = ["(", ")", "!", "√", "^", "%", "+", "-", "*", "/",] // alle "speziellen" Zeichen zur Nutzung im .map
+    specials = ["(", ")", "!", "√", "ˆ", "%", "+", "-", "*", "/",] // alle "speziellen" Zeichen zur Nutzung im .map
 
     /* Erstelle nun neues array mit konvertierten Werten (zur einfachen verwendung von berechnungen),
     und gib dieses als Ergebnis der Funktion aus
@@ -95,6 +95,7 @@ function fakultaet(n) {
 
 // Berechnungs-"Box" (zum verkapseln von anfragen)
 function calcBox(arg) {
+    console.log(arg)
     for (i = 0; i < arg.length; i++) {
         // Faktorial
         if (arg[i] == "!") {
@@ -107,7 +108,8 @@ function calcBox(arg) {
             fakt = fakultaet(fakt_num);
             arg.splice(i - j, 1, fakt);
             i -= j + 1; // verringere i, mit der Anzahl der ausgetauschten werte
-        } else if (arg[i] == "√") {
+        } 
+        else if (arg[i] == "√") {
             // Wurzeln (startet mit Klammer)
             let isFloat = n => Number(n) === n && n%1 !== 0;
             var j = (Number.isInteger(arg[i - 1]) || isFloat(arg[i - 1]))?1:0 // definiere länge VOR wurzel wenn ein wert gegeben ist
@@ -158,6 +160,9 @@ function calcBox(arg) {
             }
             arg.splice(i-j, 1, root);
             i -= (j + 2); // verringere index i, mit der Anzahl der ausgetauschten werte
+        } 
+        else if (arg[i] == "ˆ") {
+            arg.splice(i, 1, "**")
         }
     }
     return eval(arg.join(""));
