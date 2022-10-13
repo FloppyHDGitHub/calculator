@@ -127,42 +127,36 @@ function calcBox(arg) {
                 k++;
             }
             k--; // idk why, aber es brauch es
+            k_ == 0 ? k++ : null // i can't count somehow
             n = j == 0 ? 0 : arg.splice(i - 1, 1);
+            n = n[0]
             n ? i-- : null; //
             // definiere n nur, wenn eine nte Zahl definiert wurde und extrahiere den vorherigen eintrag
-
-            let calc = arg.splice(i + 1, k, "x").join(""); // entnehme String der Klammern und ersetze durch ein "x" ( wird benötigt, um später "x" durch ergebnis auszutauschen)
+            let calc = arg.splice(i + 1, k, n); // entnehme String der Klammern und ersetze durch den wert "n", um rekursive anfragen besser zu verarbeiten
             // extrahiere werte und wandel in neuen String um
-
             if (k_ > 0) {
                 for (null; k_ != 0; k_--) {
-                    calc += ")";
+                    calc.push(")");
                 }
-            } // "virtuell" Klammer hinzufügen, solange noch welche fehlen
-            x = special_characters.some((sc) => calc.includes(sc)) // erklärung unten
+            } // "virtuell" Klammer hinzufügen, solange noch welche fehlen um dann
+            calc.pop(); calc.shift(); // die äußere Klammer zu entfernen
+            calc = calc.join(""); // string erstellen
+            // frag nicht................................................................
+            x = special_characters.some((sc) => calc.includes(sc))
                 ? calcBox(convertString(calc))
                 : eval(""+calc) == undefined
                     ? NaN
                     : eval(""+calc);
-            i = arg.lastIndexOf("x") -1 // ersetze 'i' durch das letzte vorhandene "x", mit dem ergebnis von 'calc'
-            /* Größtes Problem war hier ...
-                            Problembehandlung:
-                                oben im Code definierte ich die verwendeten Sonderzeichen
-                                ablauf-verfolgung von X:
-                                    zunächst prüfe ich ob die sonderzeichen im calc-string enthalten sind,
-                                    ? wenn dies der fall ist, dann werfe ich den string nochmal in die calcBox
-                                    : ansonsten überprüfe ich, OB ein undefined enstehen würde
-                                        ? ist dies der fall ist der Wert NaN
-                                        : ansonsten eval den calc-string
-                            i wurde bei einer weiteren Verschachtelung überschrieben, "x" hilft, den "Index" wieder zu finden
-                            */
+            i = arg.lastIndexOf("√")
+            n = (isFloat(arg[i+1]) || Number.isInteger(arg[i+1])) ? arg[i+1] : 0 
+            // zu kompliziert zum erklären................................................................
             root = NaN; // predefine root, solange nicht gerechnet wird, ist es "Not a Number"
-            if (j > 0 && x > 0) { // ist `x` & `j` vorhanden? dann 'n'te Wurzel ziehen
+            if (n > 0 && x > 0) { // ist `x` & `n` vorhanden? dann 'n'te Wurzel ziehen
                 root = Math.pow(x, 1 / n);
             } else if (x > 0) { // ansonsten Quadrat-wurzel
                 root = Math.sqrt(x);
             }
-            arg.splice(i, 2, root); // ersetze Wurzel und "x" durch das ergebnis "root"
+            arg.splice(i, 2, root); // ersetze Wurzel und "n" durch das ergebnis "root"
         } 
         else if (arg[i] == "ˆ") {
             arg.splice(i, 1, "**")
