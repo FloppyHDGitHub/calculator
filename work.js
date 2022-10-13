@@ -1,4 +1,4 @@
-special_characters = ["√", "%", "!", "^"];
+special_characters = ["√", "%", "!", "ˆ"];
 
 // Vorabrechnung im unteren Teil
 function appendOperation(operation) {
@@ -10,7 +10,7 @@ function appendOperation(operation) {
 
 // errechnen des ergebnis und eintragen in die obere Spalte
 function calculateResult(container) {
-    let result = calcBox(convertString(container.innerHTML));
+    let result = round(calcBox(convertString(container.innerHTML)), 3);
     if (result !== undefined) {
         container.innerHTML = result;
         document.getElementById("lilresultArea").innerHTML = "";
@@ -45,6 +45,9 @@ function promode() {
     element.classList.toggle("pro");
 }
 
+function round(float, after_comma) {
+    return ((Math.round(float * (10**after_comma))) / (10**after_comma))
+}
 
 //Mathe-Sektion
 
@@ -95,7 +98,6 @@ function fakultaet(n) {
 
 // Berechnungs-"Box" (zum verkapseln von anfragen)
 function calcBox(arg) {
-    console.log(arg)
     for (i = 0; i < arg.length; i++) {
         // Faktorial
         if (arg[i] == "!") {
@@ -107,7 +109,7 @@ function calcBox(arg) {
             fakt_num = Number.parseInt(arg.splice(i - j, j).join(""));
             fakt = fakultaet(fakt_num);
             arg.splice(i - j, 1, fakt);
-            i -= j + 1; // verringere i, mit der Anzahl der ausgetauschten werte
+            i--;
         } 
         else if (arg[i] == "√") {
             // Wurzeln (startet mit Klammer)
@@ -126,9 +128,10 @@ function calcBox(arg) {
             }
             k--; // idk why, aber es brauch es
             n = j == 0 ? 0 : arg.splice(i - 1, 1);
+            n ? i-- : null; //
             // definiere n nur, wenn eine nte Zahl definiert wurde und extrahiere den vorherigen eintrag
 
-            let calc = arg.splice(i + 1 - j, k).join("");
+            let calc = arg.splice(i + 1, k, "x").join(""); // entnehme String der Klammern und ersetze durch ein "x" ( wird benötigt, um später "x" durch ergebnis auszutauschen)
             // extrahiere werte und wandel in neuen String um
 
             if (k_ > 0) {
@@ -136,30 +139,30 @@ function calcBox(arg) {
                     calc += ")";
                 }
             } // "virtuell" Klammer hinzufügen, solange noch welche fehlen
-
             x = special_characters.some((sc) => calc.includes(sc)) // erklärung unten
-                ? calcBox(calc.split([]))
-                : eval(calc) == undefined
+                ? calcBox(convertString(calc))
+                : eval(""+calc) == undefined
                     ? NaN
-                    : eval(calc);
+                    : eval(""+calc);
+            i = arg.lastIndexOf("x") -1 // ersetze 'i' durch das letzte vorhandene "x", mit dem ergebnis von 'calc'
             /* Größtes Problem war hier ...
-                          Problembehandlung:
-                              oben im Code definierte ich die verwendeten Sonderzeichen
-                              ablauf-verfolgung von X:
-                                  zunächst prüfe ich ob die sonderzeichen im calc-string enthalten sind,
-                                  ? wenn dies der fall ist, dann werfe ich den string nochmal in die calcBox
-                                  : ansonsten überprüfe ich, OB ein undefined enstehen würde
-                                      ? ist dies der fall ist der Wert NaN
-                                      : ansonsten eval den calc-string
-                          */
+                            Problembehandlung:
+                                oben im Code definierte ich die verwendeten Sonderzeichen
+                                ablauf-verfolgung von X:
+                                    zunächst prüfe ich ob die sonderzeichen im calc-string enthalten sind,
+                                    ? wenn dies der fall ist, dann werfe ich den string nochmal in die calcBox
+                                    : ansonsten überprüfe ich, OB ein undefined enstehen würde
+                                        ? ist dies der fall ist der Wert NaN
+                                        : ansonsten eval den calc-string
+                            i wurde bei einer weiteren Verschachtelung überschrieben, "x" hilft, den "Index" wieder zu finden
+                            */
             root = NaN; // predefine root, solange nicht gerechnet wird, ist es "Not a Number"
             if (j > 0 && x > 0) { // ist `x` & `j` vorhanden? dann 'n'te Wurzel ziehen
                 root = Math.pow(x, 1 / n);
             } else if (x > 0) { // ansonsten Quadrat-wurzel
                 root = Math.sqrt(x);
             }
-            arg.splice(i-j, 1, root);
-            i -= (j + 2); // verringere index i, mit der Anzahl der ausgetauschten werte
+            arg.splice(i, 2, root); // ersetze Wurzel und "x" durch das ergebnis "root"
         } 
         else if (arg[i] == "ˆ") {
             arg.splice(i, 1, "**")
