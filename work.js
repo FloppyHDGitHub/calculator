@@ -147,7 +147,7 @@ function calcBox(arg) {
                 : eval(""+calc) == undefined
                     ? NaN
                     : eval(""+calc);
-            i = arg.lastIndexOf("√")
+            i = arg.indexOf("√") // erster index... weil wir doch von vorne im Index starten ....
             n = (isFloat(arg[i+1]) || Number.isInteger(arg[i+1])) ? arg[i+1] : 0 
             // zu kompliziert zum erklären................................................................
             root = NaN; // predefine root, solange nicht gerechnet wird, ist es "Not a Number"
